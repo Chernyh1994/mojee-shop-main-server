@@ -12,7 +12,10 @@ export class UsersService {
   ) {}
 
   async findOne(email: string): Promise<User> {
-    return this.userRepository.findOneBy({ email });
+    return this.userRepository.findOne({
+      where: { email },
+      relations: ['role'],
+    });
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {

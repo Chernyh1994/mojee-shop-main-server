@@ -6,6 +6,7 @@ import { APP_GUARD } from '@nestjs/core';
 import { AuthController } from './auth.controller';
 import { AuthService } from './auth.service';
 import { UsersModule } from '../users/users.module';
+import { RolesModule } from '../roles/roles.module';
 import { LocalStrategy } from './strategies/local.strategy';
 import { JwtStrategy } from './strategies/jwt.strategy';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
@@ -15,6 +16,7 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     UsersModule,
     PassportModule,
     ConfigModule,
+    RolesModule,
     JwtModule.registerAsync({
       imports: [ConfigModule],
       useFactory: async (config: ConfigService) => ({

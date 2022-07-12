@@ -3,4 +3,5 @@ export class RegistrationUserDto {
   readonly email: string;
   password: string;
   readonly age: number;
+  role_id: number;
 }
