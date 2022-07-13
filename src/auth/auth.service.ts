@@ -37,12 +37,9 @@ export class AuthService {
   }
 
   async registration(registrationUserDto: RegistrationUserDto) {
-    const salt = await bcrypt.genSalt();
-    registrationUserDto.password = await bcrypt.hash(
-      registrationUserDto.password,
-      salt,
-    );
+    const password = registrationUserDto.password;
 
+    registrationUserDto.password = await AuthService.hashPassword(password);
     registrationUserDto.role_id = await this.getUserRoleId();
 
     const user = await this.usersService.create(registrationUserDto);
@@ -51,6 +48,11 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
     };
+  }
+
+  private static async hashPassword(password: string): Promise<string> {
+    const salt = await bcrypt.genSalt();
+    return bcrypt.hash(password, salt);
   }
 
   private async getUserRoleId(): Promise<number> {

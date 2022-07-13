@@ -8,6 +8,7 @@ import {
   Param,
   Post,
   Put,
+  ParseIntPipe,
 } from '@nestjs/common';
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
@@ -28,7 +29,7 @@ export class ProductsController {
 
   @Public()
   @Get(':id')
-  findOne(@Param('id') id: string) {
+  findOne(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.findOne(id);
   }
 
@@ -41,13 +42,16 @@ export class ProductsController {
 
   @Roles(RoleValues.OWNER, RoleValues.ADMIN, RoleValues.MODERATOR)
   @Put(':id')
-  update(@Body() updateProductDto: UpdateProductDto, @Param('id') id: string) {
+  update(
+    @Body() updateProductDto: UpdateProductDto,
+    @Param('id', ParseIntPipe) id: number,
+  ) {
     return this.productsService.update(updateProductDto, id);
   }
 
   @Roles(RoleValues.OWNER)
   @Delete(':id')
-  delete(@Param('id') id: string) {
+  delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.delete(id);
   }
 }
