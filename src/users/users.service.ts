@@ -4,7 +4,6 @@ import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import { User } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
-import { RoleValues } from '../roles/types/roles.type';
 import { RolesService } from '../roles/roles.service';
 
 @Injectable()
@@ -23,16 +22,21 @@ export class UsersService {
   }
 
   async create(createUserDto: CreateUserDto): Promise<User> {
-    await this.isUserNotExist(createUserDto.email);
-    const password = createUserDto.password;
-    createUserDto.password = await UsersService.hashPassword(password);
-    createUserDto.role_id = await this.getUserRoleId();
+    await this.validateExistUser(createUserDto.email);
+
+    const userRole = await this.rolesService.getUserRoleOrCreate();
+    const hashPassword = await UsersService.hashPassword(
+      createUserDto.password,
+    );
+
+    createUserDto.role_id = userRole.id;
+    createUserDto.password = hashPassword;
 
     return this.userRepository.save(createUserDto);
   }
 
-  async isUserNotExist(email: string) {
-    const user = this.findOne(email);
+  async validateExistUser(email: string): Promise<boolean> {
+    const user = await this.findOne(email);
 
     if (user) {
       throw new ForbiddenException({
@@ -48,18 +52,5 @@ export class UsersService {
     const salt = await bcrypt.genSalt();
 
     return bcrypt.hash(password, salt);
-  }
-
-  private async getUserRoleId(): Promise<number> {
-    let userRole = await this.rolesService.findOne(RoleValues.USER);
-
-    if (!userRole) {
-      userRole = await this.rolesService.create({
-        name: RoleValues.USER,
-        description: 'Not verification user.',
-      });
-    }
-
-    return userRole.id;
   }
 }
