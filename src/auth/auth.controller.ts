@@ -11,13 +11,15 @@ export class AuthController {
   @Public()
   @UseGuards(LocalAuthGuard)
   @Post('login')
-  async login(@Request() req) {
+  login(@Request() req): Promise<{ access_token: string }> {
     return this.authService.login(req.user);
   }
 
   @Public()
   @Post('registration')
-  registration(@Body() registrationUserDto: RegistrationUserDto) {
+  registration(
+    @Body() registrationUserDto: RegistrationUserDto,
+  ): Promise<{ access_token: string }> {
     return this.authService.registration(registrationUserDto);
   }
 }

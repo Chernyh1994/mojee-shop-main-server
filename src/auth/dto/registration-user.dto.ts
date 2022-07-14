@@ -48,7 +48,7 @@ export class RegistrationUserDto {
         'password must contain an uppercase letter, one number and one symbol !@#$%^&*',
     },
   )
-  password: string;
+  readonly password: string;
 
   @IsNotEmpty()
   @IsPositive()
@@ -61,6 +61,4 @@ export class RegistrationUserDto {
     message: 'age is very short. Minimal is $constraint1, but actual is $value',
   })
   readonly age: number;
-
-  role_id: number;
 }
