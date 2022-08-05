@@ -1,11 +1,11 @@
 import { setSeederFactory } from 'typeorm-extension';
-import { Role } from '../../src/roles/entities/role.entity';
+import { RoleEntity } from '../../src/roles/entities/role.entity';
 import { RoleValues } from '../../src/roles/types/roles.type';
 
 let roleEnumValueCount = 0;
 
-export default setSeederFactory(Role, (faker) => {
-  const role = new Role();
+export default setSeederFactory(RoleEntity, (faker) => {
+  const role = new RoleEntity();
   const values = Object.keys(RoleValues);
 
   if (roleEnumValueCount > values.length) {
