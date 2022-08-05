@@ -6,6 +6,9 @@ import { UsersModule } from './users/users.module';
 import { AuthModule } from './auth/auth.module';
 import { ProductsModule } from './products/products.module';
 import { RolesModule } from './roles/roles.module';
+import { CategoriesModule } from './categories/categories.module';
+import { DivisionsModule } from './divisions/divisions.module';
+import { ImagesModule } from './images/images.module';
 import appConfig from '../config/app.config';
 import databaseConfig from '../config/database.config';
 import authConfig from '../config/auth.config';
@@ -23,6 +26,9 @@ import authConfig from '../config/auth.config';
     AuthModule,
     ProductsModule,
     RolesModule,
+    CategoriesModule,
+    DivisionsModule,
+    ImagesModule,
   ],
   controllers: [],
   providers: [],

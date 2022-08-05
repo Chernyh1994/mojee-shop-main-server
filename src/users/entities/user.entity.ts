@@ -4,16 +4,15 @@ import {
   PrimaryGeneratedColumn,
   ManyToOne,
   JoinColumn,
+  OneToOne,
 } from 'typeorm';
-import { Role } from '../../roles/entities/role.entity';
+import { RoleEntity } from '../../roles/entities/role.entity';
+import { ProfileEntity } from './profile.entity';
 
 @Entity('users')
-export class User {
+export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
-
-  @Column({ nullable: false })
-  firstName: string;
 
   @Column({ nullable: false })
   email: string;
@@ -21,22 +20,29 @@ export class User {
   @Column({ nullable: false })
   password: string;
 
+  @Column({ nullable: false, default: false })
+  is_verified: boolean;
+
+  @Column({ nullable: false, default: false })
+  is_deleted: boolean;
+
   @Column({ nullable: false })
-  age: number;
+  profile_id: number;
 
   @Column({ nullable: false })
   role_id: number;
-
-  @ManyToOne(() => Role, (role) => role.users)
-  @JoinColumn({ name: 'role_id' })
-  role: Role;
-
-  @Column({ default: false })
-  isDeleted: boolean;
 
   @Column({ default: new Date() })
   created_at: Date;
 
   @Column({ default: new Date() })
   updated_at: Date;
+
+  @OneToOne(() => ProfileEntity, (profile) => profile.user)
+  @JoinColumn({ name: 'profile_id' })
+  profile: ProfileEntity;
+
+  @ManyToOne(() => RoleEntity, (role) => role.users)
+  @JoinColumn({ name: 'role_id' })
+  role: RoleEntity;
 }

@@ -1,9 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
 import { RoleType, RoleValues } from '../types/roles.type';
-import { User } from '../../users/entities/user.entity';
+import { UserEntity } from '../../users/entities/user.entity';
 
 @Entity('roles')
-export class Role {
+export class RoleEntity {
   @PrimaryGeneratedColumn()
   id: number;
 
@@ -17,10 +17,11 @@ export class Role {
       RoleValues.USER,
     ],
     default: RoleValues.USER,
+    nullable: false,
   })
   name: RoleType;
 
-  @Column()
+  @Column({ nullable: true })
   description: string;
 
   @Column({ default: new Date() })
@@ -29,6 +30,6 @@ export class Role {
   @Column({ default: new Date() })
   updated_at: Date;
 
-  @OneToMany(() => User, (user) => user.role)
-  users: User[];
+  @OneToMany(() => UserEntity, (user) => user.role)
+  users: UserEntity[];
 }

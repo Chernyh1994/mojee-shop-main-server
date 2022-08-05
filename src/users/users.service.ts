@@ -2,26 +2,26 @@ import { ForbiddenException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { RolesService } from '../roles/roles.service';
 
 @Injectable()
 export class UsersService {
   constructor(
-    @InjectRepository(User)
-    private userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private userRepository: Repository<UserEntity>,
     private rolesService: RolesService,
   ) {}
 
-  async findOne(email: string): Promise<User> {
+  async findOne(email: string): Promise<UserEntity> {
     return this.userRepository.findOne({
       where: { email },
       relations: ['role'],
     });
   }
 
-  async create(createUserDto: CreateUserDto): Promise<User> {
+  async create(createUserDto: CreateUserDto): Promise<UserEntity> {
     await this.validateExistUser(createUserDto.email);
 
     const userRole = await this.rolesService.getUserRoleOrCreate();
