@@ -36,15 +36,15 @@ export class ProductEntity {
   updated_at: Date;
 
   @ManyToOne(() => CategoryEntity, (category) => category.products)
-  @JoinColumn({ name: 'category_id' })
+  @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category: CategoryEntity;
 
   @OneToOne(() => PriceEntity, (price) => price.product)
-  @JoinColumn({ name: 'price_id' })
+  @JoinColumn({ name: 'price_id', referencedColumnName: 'id' })
   price: PriceEntity;
 
   @OneToOne(() => DetailEntity, (detail) => detail.product)
-  @JoinColumn({ name: 'detail_id' })
+  @JoinColumn({ name: 'detail_id', referencedColumnName: 'id' })
   detail: DetailEntity;
 
   @OneToMany(() => ImageEntity, (image) => image.product)

@@ -3,11 +3,11 @@ import {
   Column,
   PrimaryGeneratedColumn,
   ManyToOne,
-  JoinColumn, OneToMany,
+  JoinColumn,
+  OneToMany,
 } from 'typeorm';
 import { DivisionEntity } from '../../divisions/entities/division.entity';
-import {UserEntity} from "../../users/entities/user.entity";
-import {ProductEntity} from "../../products/entities/product.entity";
+import { ProductEntity } from '../../products/entities/product.entity';
 
 @Entity('categories')
 export class CategoryEntity {
@@ -30,7 +30,10 @@ export class CategoryEntity {
   updated_at: Date;
 
   @ManyToOne(() => DivisionEntity, (division) => division.categories)
-  @JoinColumn({ name: 'division_id' })
+  @JoinColumn({
+    name: 'division_id',
+    referencedColumnName: 'id',
+  })
   division: DivisionEntity;
 
   @OneToMany(() => ProductEntity, (product) => product.category)

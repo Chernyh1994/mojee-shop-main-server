@@ -5,11 +5,13 @@ import {
   ManyToOne,
   JoinColumn,
   OneToOne,
+  Unique,
 } from 'typeorm';
 import { RoleEntity } from '../../roles/entities/role.entity';
 import { ProfileEntity } from './profile.entity';
 
 @Entity('users')
+@Unique(['email'])
 export class UserEntity {
   @PrimaryGeneratedColumn()
   id: number;
@@ -39,10 +41,10 @@ export class UserEntity {
   updated_at: Date;
 
   @OneToOne(() => ProfileEntity, (profile) => profile.user)
-  @JoinColumn({ name: 'profile_id' })
+  @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
   profile: ProfileEntity;
 
   @ManyToOne(() => RoleEntity, (role) => role.users)
-  @JoinColumn({ name: 'role_id' })
+  @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
   role: RoleEntity;
 }

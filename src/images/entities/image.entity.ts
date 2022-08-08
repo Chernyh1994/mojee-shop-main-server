@@ -31,6 +31,6 @@ export class ImageEntity {
   updated_at: Date;
 
   @ManyToOne(() => ProductEntity, (product) => product.images)
-  @JoinColumn({ name: 'product_id' })
+  @JoinColumn({ name: 'product_id', referencedColumnName: 'id' })
   product: ProductEntity;
 }

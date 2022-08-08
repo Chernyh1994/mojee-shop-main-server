@@ -7,6 +7,10 @@ import { RolesGuard } from './guards/roles.guard';
 import { UsersModule } from '../users/users.module';
 
 @Module({
+  imports: [
+    forwardRef(() => UsersModule),
+    TypeOrmModule.forFeature([RoleEntity]),
+  ],
   providers: [
     {
       provide: APP_GUARD,
@@ -14,7 +18,6 @@ import { UsersModule } from '../users/users.module';
     },
     RolesService,
   ],
-  imports: [forwardRef(() => UsersModule), TypeOrmModule.forFeature([RoleEntity])],
   exports: [RolesService],
 })
 export class RolesModule {}
