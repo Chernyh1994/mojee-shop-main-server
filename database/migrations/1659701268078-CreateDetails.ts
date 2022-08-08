@@ -1,4 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
+import { SizeEnum } from '../../src/products/enums/size.enum';
 
 export class CreateDetails1659701268078 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -28,7 +29,13 @@ export class CreateDetails1659701268078 implements MigrationInterface {
           {
             name: 'size',
             type: 'enum',
-            enum: ['XS', 'S', 'M', 'L', 'XL'],
+            enum: [
+              SizeEnum.XS,
+              SizeEnum.S,
+              SizeEnum.M,
+              SizeEnum.L,
+              SizeEnum.XL,
+            ],
             enumName: 'details_size_enum[]',
             isNullable: false,
           },

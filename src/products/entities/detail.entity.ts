@@ -1,15 +1,7 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { ProductEntity } from './product.entity';
-
-enum SizeValues {
-  XS = 'XS',
-  S = 'S',
-  M = 'M',
-  L = 'L',
-  XL = 'XL',
-}
-
-type SizeType = keyof typeof SizeValues;
+import { SizeEnum } from '../enums/size.enum';
+import { SizeType } from '../types/size.type';
 
 @Entity('details')
 export class DetailEntity {
@@ -24,13 +16,7 @@ export class DetailEntity {
 
   @Column({
     type: 'enum',
-    enum: [
-      SizeValues.XS,
-      SizeValues.S,
-      SizeValues.M,
-      SizeValues.L,
-      SizeValues.XL,
-    ],
+    enum: [SizeEnum.XS, SizeEnum.S, SizeEnum.M, SizeEnum.L, SizeEnum.XL],
     nullable: false,
   })
   size: SizeType;
