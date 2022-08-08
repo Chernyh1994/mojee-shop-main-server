@@ -3,7 +3,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { DataSourceOptions } from 'typeorm';
 import { UsersModule } from './users/users.module';
-import { AuthModule } from './auth/auth.module';
+import { AuthorizationsModule } from './authorizations/authorizations.module';
 import { ProductsModule } from './products/products.module';
 import { RolesModule } from './roles/roles.module';
 import { CategoriesModule } from './categories/categories.module';
@@ -23,7 +23,7 @@ import authConfig from '../config/auth.config';
       inject: [ConfigService],
     }),
     UsersModule,
-    AuthModule,
+    AuthorizationsModule,
     ProductsModule,
     RolesModule,
     CategoriesModule,

@@ -13,7 +13,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Public } from '../auth/decorators/public.decorator';
+import { Public } from '../authorizations/decorators/public.decorator';
 import { Roles } from '../roles/decorators/roles.decorator';
 import { RoleEnum } from '../roles/enums/role.enum';
 

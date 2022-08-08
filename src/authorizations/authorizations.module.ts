@@ -32,4 +32,4 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
     },
   ],
 })
-export class AuthModule {}
+export class AuthorizationsModule {}
