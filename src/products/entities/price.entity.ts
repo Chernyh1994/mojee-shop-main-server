@@ -1,21 +1,9 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToOne } from 'typeorm';
 import { ProductEntity } from './product.entity';
-
-enum CurrencyCodeValues {
-  USD = 'USD',
-  EUR = 'EUR',
-  UAH = 'UAH',
-}
-
-type CurrencyCodeType = keyof typeof CurrencyCodeValues;
-
-enum CurrencySymbolValues {
-  USD = '$',
-  EUR = '€',
-  UAH = '₴',
-}
-
-type CurrencySymbolType = keyof typeof CurrencySymbolValues;
+import { CurrencyCodeEnum } from '../enums/currency-code.enum';
+import { CurrencySymbolEnum } from '../enums/currency-symbol.enum';
+import { CurrencyCodeType } from '../types/currency-code.type';
+import { CurrencySymbolType } from '../types/currency-symbol.type';
 
 @Entity('prices')
 export class PriceEntity {
@@ -36,11 +24,7 @@ export class PriceEntity {
 
   @Column({
     type: 'enum',
-    enum: [
-      CurrencyCodeValues.USD,
-      CurrencyCodeValues.EUR,
-      CurrencyCodeValues.UAH,
-    ],
+    enum: [CurrencyCodeEnum.USD, CurrencyCodeEnum.EUR, CurrencyCodeEnum.UAH],
     nullable: false,
   })
   currency_code: CurrencyCodeType;
@@ -48,9 +32,9 @@ export class PriceEntity {
   @Column({
     type: 'enum',
     enum: [
-      CurrencySymbolValues.USD,
-      CurrencySymbolValues.EUR,
-      CurrencySymbolValues.UAH,
+      CurrencySymbolEnum.USD,
+      CurrencySymbolEnum.EUR,
+      CurrencySymbolEnum.UAH,
     ],
     nullable: false,
   })
