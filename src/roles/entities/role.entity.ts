@@ -1,5 +1,6 @@
 import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from 'typeorm';
-import { RoleType, RoleValues } from '../types/roles.type';
+import { RoleEnum } from '../enums/role.enum';
+import { RoleType } from '../types/role.type';
 import { UserEntity } from '../../users/entities/user.entity';
 
 @Entity('roles')
@@ -10,13 +11,13 @@ export class RoleEntity {
   @Column({
     type: 'enum',
     enum: [
-      RoleValues.OWNER,
-      RoleValues.ADMIN,
-      RoleValues.MODERATOR,
-      RoleValues.VERIFY_USER,
-      RoleValues.USER,
+      RoleEnum.OWNER,
+      RoleEnum.ADMIN,
+      RoleEnum.MODERATOR,
+      RoleEnum.VERIFY_USER,
+      RoleEnum.USER,
     ],
-    default: RoleValues.USER,
+    default: RoleEnum.USER,
     nullable: false,
   })
   name: RoleType;

@@ -3,7 +3,8 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { RoleEntity } from './entities/role.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
-import { RoleType, RoleValues } from './types/roles.type';
+import { RoleEnum } from './enums/role.enum';
+import { RoleType } from './types/role.type';
 
 @Injectable()
 export class RolesService {
@@ -22,11 +23,11 @@ export class RolesService {
   }
 
   async getUserRoleOrCreate(): Promise<RoleEntity> {
-    let userRole = await this.findOne(RoleValues.USER);
+    let userRole = await this.findOne(RoleEnum.USER);
 
     if (!userRole) {
       const createRoleDto: CreateRoleDto = {
-        name: RoleValues.USER,
+        name: RoleEnum.USER,
         description: 'Role for unverified user',
       };
 

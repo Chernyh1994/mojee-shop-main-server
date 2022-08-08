@@ -15,7 +15,7 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../roles/decorators/roles.decorator';
-import { RoleValues } from '../roles/types/roles.type';
+import { RoleEnum } from '../roles/enums/role.enum';
 
 @Controller('products')
 export class ProductsController {
@@ -34,13 +34,13 @@ export class ProductsController {
   }
 
   @Post()
-  @Roles(RoleValues.OWNER, RoleValues.ADMIN)
+  @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
   @HttpCode(HttpStatus.CREATED)
   create(@Body() createProductDto: CreateProductDto) {
     return this.productsService.create(createProductDto);
   }
 
-  @Roles(RoleValues.OWNER, RoleValues.ADMIN, RoleValues.MODERATOR)
+  @Roles(RoleEnum.OWNER, RoleEnum.ADMIN, RoleEnum.MODERATOR)
   @Put(':id')
   update(
     @Body() updateProductDto: UpdateProductDto,
@@ -49,7 +49,7 @@ export class ProductsController {
     return this.productsService.update(updateProductDto, id);
   }
 
-  @Roles(RoleValues.OWNER)
+  @Roles(RoleEnum.OWNER)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.delete(id);

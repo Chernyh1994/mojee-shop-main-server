@@ -1,5 +1,5 @@
 import { MigrationInterface, QueryRunner, Table } from 'typeorm';
-import { RoleValues } from '../../src/roles/types/roles.type';
+import { RoleEnum } from '../../src/roles/enums/role.enum';
 
 export class CreateRoles1657531464247 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -16,14 +16,14 @@ export class CreateRoles1657531464247 implements MigrationInterface {
             name: 'name',
             type: 'enum',
             enum: [
-              RoleValues.OWNER,
-              RoleValues.ADMIN,
-              RoleValues.MODERATOR,
-              RoleValues.VERIFY_USER,
-              RoleValues.USER,
+              RoleEnum.OWNER,
+              RoleEnum.ADMIN,
+              RoleEnum.MODERATOR,
+              RoleEnum.VERIFY_USER,
+              RoleEnum.USER,
             ],
             enumName: 'roles_name_enum',
-            default: `'${RoleValues.USER}'`,
+            default: `'${RoleEnum.USER}'`,
             isNullable: false,
           },
           {
