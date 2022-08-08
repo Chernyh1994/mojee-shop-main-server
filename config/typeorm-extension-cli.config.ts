@@ -1,5 +1,5 @@
-import databaseConfig from './database.config';
 import * as dotenv from 'dotenv';
+import databaseConfig from './database.config';
 
 dotenv.config();
 
