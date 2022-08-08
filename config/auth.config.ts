@@ -1,6 +1,5 @@
 import { registerAs } from '@nestjs/config';
 
 export default registerAs('auth', () => ({
-  jwtSecret: process.env.JWT_SECRET,
-  expires: 600000,
+  jwtSecret: process.env.JWT_ACCESS_SECRET,
 }));
