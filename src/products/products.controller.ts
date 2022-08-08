@@ -21,7 +21,7 @@ import { RoleEnum } from '../roles/enums/role.enum';
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
-  @Public()
+  // @Public()
   @Get()
   findAll() {
     return this.productsService.findAll();
