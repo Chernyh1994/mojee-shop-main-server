@@ -13,7 +13,7 @@ import {
 import { ProductsService } from './products.service';
 import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
-import { Public } from '../authorizations/decorators/public.decorator';
+import { Public } from '../auth/decorators/public.decorator';
 import { Roles } from '../roles/decorators/roles.decorator';
 import { RoleEnum } from '../roles/enums/role.enum';
 
@@ -21,7 +21,7 @@ import { RoleEnum } from '../roles/enums/role.enum';
 export class ProductsController {
   constructor(private productsService: ProductsService) {}
 
-  // @Public()
+  @Public()
   @Get()
   findAll() {
     return this.productsService.findAll();
@@ -49,7 +49,7 @@ export class ProductsController {
     return this.productsService.update(updateProductDto, id);
   }
 
-  @Roles(RoleEnum.OWNER)
+  @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
   @Delete(':id')
   delete(@Param('id', ParseIntPipe) id: number) {
     return this.productsService.delete(id);

@@ -14,9 +14,9 @@ export class UsersService {
     private rolesService: RolesService,
   ) {}
 
-  async findOne(email: string): Promise<UserEntity> {
+  async findOne(id: number): Promise<UserEntity> {
     return this.userRepository.findOne({
-      where: { email },
+      where: { id },
       relations: ['role'],
     });
   }
@@ -36,7 +36,9 @@ export class UsersService {
   }
 
   async validateExistUser(email: string): Promise<boolean> {
-    const user = await this.findOne(email);
+    const user = await this.userRepository.findOne({
+      where: { email },
+    });
 
     if (user) {
       throw new ForbiddenException({
