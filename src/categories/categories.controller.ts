@@ -26,7 +26,7 @@ export class CategoriesController {
   @Post()
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
   @HttpCode(HttpStatus.CREATED)
-  public create(@Body() createCategoryDto: CreateCategoryDto): Promise<CategoryEntity> {
+  public create(@Body() createCategoryDto: CreateCategoryDto): Promise<{ data: string }> {
     return this.categoriesService.create(createCategoryDto);
   }
 
@@ -35,7 +35,7 @@ export class CategoriesController {
   public update(
     @Body() updateCategoryDto: UpdateCategoryDto,
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<CategoryEntity> {
+  ): Promise<{ data: string }> {
     return this.categoriesService.update(updateCategoryDto, id);
   }
 

@@ -29,13 +29,7 @@ export class CreateDetails1659701268078 implements MigrationInterface {
           {
             name: 'size',
             type: 'enum',
-            enum: [
-              SizeEnum.XS,
-              SizeEnum.S,
-              SizeEnum.M,
-              SizeEnum.L,
-              SizeEnum.XL,
-            ],
+            enum: [SizeEnum.XS, SizeEnum.S, SizeEnum.M, SizeEnum.L, SizeEnum.XL],
             enumName: 'details_size_enum[]',
             isNullable: false,
           },

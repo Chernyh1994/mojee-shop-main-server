@@ -32,22 +32,14 @@ export class CreatePrices1659701225794 implements MigrationInterface {
           {
             name: 'currency_code',
             type: 'enum',
-            enum: [
-              CurrencyCodeEnum.USD,
-              CurrencyCodeEnum.EUR,
-              CurrencyCodeEnum.UAH,
-            ],
+            enum: [CurrencyCodeEnum.USD, CurrencyCodeEnum.EUR, CurrencyCodeEnum.UAH],
             enumName: 'prices_currency_code_enum',
             isNullable: false,
           },
           {
             name: 'symbol',
             type: 'enum',
-            enum: [
-              CurrencySymbolEnum.USD,
-              CurrencySymbolEnum.EUR,
-              CurrencySymbolEnum.UAH,
-            ],
+            enum: [CurrencySymbolEnum.USD, CurrencySymbolEnum.EUR, CurrencySymbolEnum.UAH],
             enumName: 'prices_symbol_enum',
             isNullable: false,
           },
