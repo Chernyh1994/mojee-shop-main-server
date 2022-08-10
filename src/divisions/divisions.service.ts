@@ -1,6 +1,6 @@
-import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { DeleteResult, Repository } from 'typeorm';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { DivisionEntity } from './entities/division.entity';
 import { CreateDivisionDto } from './dto/create-division.dto';
 import { UpdateDivisionDto } from './dto/update-division.dto';
@@ -20,14 +20,31 @@ export class DivisionsService {
     return this.divisionsRepository.findOneBy({ id });
   }
 
-  public async create(division: CreateDivisionDto): Promise<DivisionEntity> {
-    const newDivision: DivisionEntity = this.divisionsRepository.create(division);
-    return this.divisionsRepository.save(newDivision);
+  public async create(division: CreateDivisionDto): Promise<{ data: string }> {
+    const divisionEntity: DivisionEntity = await this.divisionsRepository.create(division);
+    const newDivision: DivisionEntity = await this.divisionsRepository.save(divisionEntity);
+
+    if (!newDivision) {
+      throw new ForbiddenException({
+        status: HttpStatus.FORBIDDEN,
+        error: 'Division not created.',
+      });
+    }
+
+    return { data: 'Division successful create.' };
   }
 
-  public async update(division: UpdateDivisionDto, id: number): Promise<DivisionEntity> {
-    await this.divisionsRepository.update(id, division);
-    return this.divisionsRepository.findOneBy({ id });
+  public async update(division: UpdateDivisionDto, id: number): Promise<{ data: string }> {
+    const { affected }: UpdateResult = await this.divisionsRepository.update(id, division);
+
+    if (!affected) {
+      throw new BadRequestException({
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Failed to update division.',
+      });
+    }
+
+    return { data: 'Division successful update.' };
   }
 
   public async delete(id: number): Promise<{ data: string }> {

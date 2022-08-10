@@ -26,7 +26,7 @@ export class DivisionsController {
   @Post()
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
   @HttpCode(HttpStatus.CREATED)
-  public create(@Body() createDivisionDto: CreateDivisionDto): Promise<DivisionEntity> {
+  public create(@Body() createDivisionDto: CreateDivisionDto): Promise<{ data: string }> {
     return this.divisionsService.create(createDivisionDto);
   }
 
@@ -35,7 +35,7 @@ export class DivisionsController {
   public update(
     @Body() updateDivisionDto: UpdateDivisionDto,
     @Param('id', ParseIntPipe) id: number,
-  ): Promise<DivisionEntity> {
+  ): Promise<{ data: string }> {
     return this.divisionsService.update(updateDivisionDto, id);
   }
 
