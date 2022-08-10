@@ -5,6 +5,7 @@ import { Roles } from '../roles/decorators/roles.decorator';
 import { RoleEnum } from '../roles/enums/role.enum';
 import { CreateDivisionDto } from './dto/create-division.dto';
 import { UpdateDivisionDto } from './dto/update-division.dto';
+import { DivisionEntity } from './entities/division.entity';
 
 @Controller('divisions')
 export class DivisionsController {
@@ -12,32 +13,35 @@ export class DivisionsController {
 
   @Public()
   @Get()
-  findAll() {
+  public findAll(): Promise<DivisionEntity[]> {
     return this.divisionsService.findAll();
   }
 
   @Public()
   @Get(':id')
-  findOne(@Param('id', ParseIntPipe) id: number) {
+  public findOne(@Param('id', ParseIntPipe) id: number): Promise<DivisionEntity> {
     return this.divisionsService.findOne(id);
   }
 
   @Post()
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
   @HttpCode(HttpStatus.CREATED)
-  create(@Body() createDivisionDto: CreateDivisionDto) {
+  public create(@Body() createDivisionDto: CreateDivisionDto): Promise<DivisionEntity> {
     return this.divisionsService.create(createDivisionDto);
   }
 
   @Put(':id')
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
-  update(@Body() updateDivisionDto: UpdateDivisionDto, @Param('id', ParseIntPipe) id: number) {
+  public update(
+    @Body() updateDivisionDto: UpdateDivisionDto,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<DivisionEntity> {
     return this.divisionsService.update(updateDivisionDto, id);
   }
 
   @Delete(':id')
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
-  delete(@Param('id', ParseIntPipe) id: number) {
+  public delete(@Param('id', ParseIntPipe) id: number): Promise<{ data: string }> {
     return this.divisionsService.delete(id);
   }
 }

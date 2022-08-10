@@ -1,6 +1,6 @@
-import { Injectable } from '@nestjs/common';
+import { BadRequestException, HttpStatus, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Repository } from 'typeorm';
+import { DeleteResult, Repository } from 'typeorm';
 import { DivisionEntity } from './entities/division.entity';
 import { CreateDivisionDto } from './dto/create-division.dto';
 import { UpdateDivisionDto } from './dto/update-division.dto';
@@ -12,26 +12,34 @@ export class DivisionsService {
     private divisionsRepository: Repository<DivisionEntity>,
   ) {}
 
-  async findAll(): Promise<DivisionEntity[]> {
+  public async findAll(): Promise<DivisionEntity[]> {
     return this.divisionsRepository.find();
   }
 
-  async findOne(id: number): Promise<DivisionEntity> {
+  public async findOne(id: number): Promise<DivisionEntity> {
     return this.divisionsRepository.findOneBy({ id });
   }
 
-  async create(division: CreateDivisionDto): Promise<DivisionEntity> {
-    const newProduct: DivisionEntity = this.divisionsRepository.create(division);
-    return this.divisionsRepository.save(newProduct);
+  public async create(division: CreateDivisionDto): Promise<DivisionEntity> {
+    const newDivision: DivisionEntity = this.divisionsRepository.create(division);
+    return this.divisionsRepository.save(newDivision);
   }
 
-  async update(division: UpdateDivisionDto, id: number): Promise<DivisionEntity> {
+  public async update(division: UpdateDivisionDto, id: number): Promise<DivisionEntity> {
     await this.divisionsRepository.update(id, division);
     return this.divisionsRepository.findOneBy({ id });
   }
 
-  async delete(id: number): Promise<string> {
-    await this.divisionsRepository.delete(id);
-    return 'deleted successful.';
+  public async delete(id: number): Promise<{ data: string }> {
+    const { affected }: DeleteResult = await this.divisionsRepository.delete(id);
+
+    if (!affected) {
+      throw new BadRequestException({
+        status: HttpStatus.BAD_REQUEST,
+        error: 'Failed to delete division.',
+      });
+    }
+
+    return { data: 'Division successful delete.' };
   }
 }

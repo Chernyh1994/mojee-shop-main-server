@@ -8,5 +8,6 @@ import { DivisionEntity } from './entities/division.entity';
   imports: [TypeOrmModule.forFeature([DivisionEntity])],
   controllers: [DivisionsController],
   providers: [DivisionsService],
+  exports: [DivisionsService],
 })
 export class DivisionsModule {}
