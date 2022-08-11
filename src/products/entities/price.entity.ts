@@ -20,7 +20,7 @@ export class PriceEntity {
     default: 0.0,
     nullable: true,
   })
-  current: string;
+  current: number;
 
   @Column({
     type: 'enum',
@@ -31,11 +31,7 @@ export class PriceEntity {
 
   @Column({
     type: 'enum',
-    enum: [
-      CurrencySymbolEnum.USD,
-      CurrencySymbolEnum.EUR,
-      CurrencySymbolEnum.UAH,
-    ],
+    enum: [CurrencySymbolEnum.USD, CurrencySymbolEnum.EUR, CurrencySymbolEnum.UAH],
     nullable: false,
   })
   symbol: CurrencySymbolType;

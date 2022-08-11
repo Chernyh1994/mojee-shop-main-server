@@ -1,4 +1,16 @@
-import { IsBoolean, IsDefined, IsNotEmpty, IsNumber, IsPositive, IsString, Max, MaxLength } from 'class-validator';
+import {
+  IsDefined,
+  IsInt,
+  IsNotEmpty,
+  IsNotEmptyObject,
+  IsString,
+  MaxLength,
+  Min,
+  ValidateNested,
+} from 'class-validator';
+import { CreateDetailDto } from './create-detail.dto';
+import { CreatePriceDto } from './create-price.dto';
+import { Type } from 'class-transformer';
 
 export class CreateProductDto {
   @IsDefined()
@@ -11,28 +23,19 @@ export class CreateProductDto {
 
   @IsDefined()
   @IsNotEmpty()
-  @IsString()
-  @MaxLength(50, {
-    message: 'category is too long. Maximal length is $constraint1 characters, but actual is $value',
-  })
-  readonly category: string;
+  @IsInt()
+  @Min(0)
+  readonly category_id: number;
 
   @IsDefined()
-  @IsNotEmpty()
-  @IsPositive()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Max(99999.99, {
-    message: 'price is very large. Maximal large is $constraint1, but actual is $value',
-  })
-  readonly price: number;
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => CreateDetailDto)
+  readonly detail: CreateDetailDto;
 
   @IsDefined()
-  @IsNotEmpty()
-  @IsString()
-  readonly currency: string;
-
-  @IsDefined()
-  @IsNotEmpty()
-  @IsBoolean()
-  readonly discount: boolean;
+  @IsNotEmptyObject()
+  @ValidateNested()
+  @Type(() => CreatePriceDto)
+  readonly price: CreatePriceDto;
 }

@@ -1,12 +1,4 @@
-import {
-  Entity,
-  Column,
-  PrimaryGeneratedColumn,
-  ManyToOne,
-  JoinColumn,
-  OneToOne,
-  OneToMany,
-} from 'typeorm';
+import { Entity, Column, PrimaryGeneratedColumn, ManyToOne, JoinColumn, OneToOne, OneToMany } from 'typeorm';
 import { CategoryEntity } from '../../categories/entities/category.entity';
 import { PriceEntity } from './price.entity';
 import { DetailEntity } from './detail.entity';
@@ -39,11 +31,21 @@ export class ProductEntity {
   @JoinColumn({ name: 'category_id', referencedColumnName: 'id' })
   category: CategoryEntity;
 
-  @OneToOne(() => PriceEntity, (price) => price.product)
+  @OneToOne(() => PriceEntity, (price) => price.product, {
+    cascade: true,
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'price_id', referencedColumnName: 'id' })
   price: PriceEntity;
 
-  @OneToOne(() => DetailEntity, (detail) => detail.product)
+  @OneToOne(() => DetailEntity, (detail) => detail.product, {
+    cascade: true,
+    eager: true,
+    onDelete: 'CASCADE',
+    onUpdate: 'CASCADE',
+  })
   @JoinColumn({ name: 'detail_id', referencedColumnName: 'id' })
   detail: DetailEntity;
 

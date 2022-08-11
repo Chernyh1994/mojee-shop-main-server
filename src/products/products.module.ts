@@ -7,9 +7,7 @@ import { PriceEntity } from './entities/price.entity';
 import { DetailEntity } from './entities/detail.entity';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([ProductEntity, PriceEntity, DetailEntity]),
-  ],
+  imports: [TypeOrmModule.forFeature([ProductEntity, PriceEntity, DetailEntity])],
   controllers: [ProductsController],
   providers: [ProductsService],
 })

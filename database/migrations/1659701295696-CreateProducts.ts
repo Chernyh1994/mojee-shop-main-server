@@ -1,10 +1,4 @@
-import {
-  MigrationInterface,
-  QueryRunner,
-  Table,
-  TableForeignKey,
-  TableIndex,
-} from 'typeorm';
+import { MigrationInterface, QueryRunner, Table, TableForeignKey, TableIndex } from 'typeorm';
 
 export class CreateProducts1659701295696 implements MigrationInterface {
   public async up(queryRunner: QueryRunner): Promise<void> {
@@ -72,8 +66,8 @@ export class CreateProducts1659701295696 implements MigrationInterface {
         columnNames: ['price_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'prices',
-        onUpdate: 'NO ACTION',
-        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       }),
     );
 
@@ -83,8 +77,8 @@ export class CreateProducts1659701295696 implements MigrationInterface {
         columnNames: ['detail_id'],
         referencedColumnNames: ['id'],
         referencedTableName: 'details',
-        onUpdate: 'NO ACTION',
-        onDelete: 'NO ACTION',
+        onUpdate: 'CASCADE',
+        onDelete: 'CASCADE',
       }),
     );
 

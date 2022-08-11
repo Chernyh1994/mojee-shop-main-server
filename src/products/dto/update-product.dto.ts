@@ -1,44 +1,24 @@
-import {
-  IsBoolean,
-  IsNotEmpty,
-  IsNumber,
-  IsPositive,
-  IsString,
-  Max,
-  MaxLength,
-} from 'class-validator';
+import { IsInt, IsString, MaxLength, Min, ValidateNested } from 'class-validator';
+import { Type } from 'class-transformer';
+import { UpdateDetailDto } from './update-detail.dto';
+import { UpdatePriceDto } from './update-price.dto';
 
 export class UpdateProductDto {
-  @IsNotEmpty()
   @IsString()
   @MaxLength(50, {
-    message:
-      'name is too long. Maximal length is $constraint1 characters, but actual is $value',
+    message: 'name is too long. Maximal length is $constraint1 characters, but actual is $value',
   })
   readonly name: string;
 
-  @IsNotEmpty()
-  @IsString()
-  @MaxLength(50, {
-    message:
-      'category is too long. Maximal length is $constraint1 characters, but actual is $value',
-  })
-  readonly category: string;
+  @IsInt()
+  @Min(0)
+  readonly category_id: number;
 
-  @IsNotEmpty()
-  @IsPositive()
-  @IsNumber({ maxDecimalPlaces: 2 })
-  @Max(99999.99, {
-    message:
-      'price is very large. Maximal large is $constraint1, but actual is $value',
-  })
-  readonly price: number;
+  @ValidateNested()
+  @Type(() => UpdateDetailDto)
+  readonly detail: UpdateDetailDto;
 
-  @IsNotEmpty()
-  @IsString()
-  readonly currency: string;
-
-  @IsNotEmpty()
-  @IsBoolean()
-  readonly discount: boolean;
+  @ValidateNested()
+  @Type(() => UpdatePriceDto)
+  readonly price: UpdatePriceDto;
 }
