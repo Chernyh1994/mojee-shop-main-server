@@ -21,8 +21,7 @@ import { RolesGuard } from './roles/guards/roles.guard';
     ConfigModule.forRoot({ load: [appConfig, databaseConfig, authConfig] }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
-      useFactory: (config: ConfigService) =>
-        config.get<DataSourceOptions>('database'),
+      useFactory: (config: ConfigService) => config.get<DataSourceOptions>('database'),
       inject: [ConfigService],
     }),
     UsersModule,

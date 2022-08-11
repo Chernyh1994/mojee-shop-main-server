@@ -17,13 +17,7 @@ export class CreateRoles1657531464247 implements MigrationInterface {
           {
             name: 'name',
             type: 'enum',
-            enum: [
-              RoleEnum.OWNER,
-              RoleEnum.ADMIN,
-              RoleEnum.MODERATOR,
-              RoleEnum.VERIFY_USER,
-              RoleEnum.USER,
-            ],
+            enum: [RoleEnum.OWNER, RoleEnum.ADMIN, RoleEnum.MODERATOR, RoleEnum.VERIFY_USER, RoleEnum.USER],
             enumName: 'roles_name_enum',
             default: `'${RoleEnum.USER}'`,
             isNullable: false,
