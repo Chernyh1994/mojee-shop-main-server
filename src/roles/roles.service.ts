@@ -3,8 +3,6 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository, UpdateResult } from 'typeorm';
 import { RoleEntity } from './entities/role.entity';
 import { CreateRoleDto } from './dto/create-role.dto';
-import { RoleEnum } from './enums/role.enum';
-import { RoleType } from './types/role.type';
 import { UpdateRoleDto } from './dto/update-role.dto';
 
 @Injectable()
@@ -20,10 +18,6 @@ export class RolesService {
 
   public async findOneById(id: number): Promise<RoleEntity> {
     return this.roleRepository.findOneByOrFail({ id });
-  }
-
-  public async findOne(name: RoleType): Promise<RoleEntity> {
-    return this.roleRepository.findOneBy({ name });
   }
 
   public async create(role: CreateRoleDto): Promise<RoleEntity> {
@@ -42,20 +36,5 @@ export class RolesService {
     }
 
     return { data: 'Role successful update.' };
-  }
-
-  public async getUserRoleOrCreate(): Promise<RoleEntity> {
-    let userRole = await this.findOne(RoleEnum.USER);
-
-    if (!userRole) {
-      const createRoleDto: CreateRoleDto = {
-        name: RoleEnum.USER,
-        description: 'Role for unverified user',
-      };
-
-      userRole = await this.create(createRoleDto);
-    }
-
-    return userRole;
   }
 }

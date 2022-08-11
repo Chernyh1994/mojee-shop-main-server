@@ -32,11 +32,14 @@ export class UserEntity {
   @Column({ default: new Date() })
   updated_at: Date;
 
-  @OneToOne(() => ProfileEntity, (profile) => profile.user)
+  @OneToOne(() => ProfileEntity, (profile) => profile.user, {
+    eager: true,
+    cascade: true,
+  })
   @JoinColumn({ name: 'profile_id', referencedColumnName: 'id' })
   profile: ProfileEntity;
 
-  @ManyToOne(() => RoleEntity, (role) => role.users)
+  @ManyToOne(() => RoleEntity, (role) => role.users, { eager: true })
   @JoinColumn({ name: 'role_id', referencedColumnName: 'id' })
   role: RoleEntity;
 }

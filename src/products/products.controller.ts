@@ -41,7 +41,7 @@ export class ProductsController {
 
   @Delete(':id')
   @Roles(RoleEnum.OWNER, RoleEnum.ADMIN)
-  public delete(@Param('id', ParseIntPipe) id: number) {
+  public delete(@Param('id', ParseIntPipe) id: number): Promise<{ data: string }> {
     return this.productsService.delete(id);
   }
 }
